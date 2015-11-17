@@ -1,7 +1,13 @@
 {{log content}}
 
 <ul class='selections'>
-  {{#each content.selections as |selection|}}
+  {{#each content.selections as |selection index|}}
+    {{#if (eq index queryPosition)}}
+      <li>
+        {{deep-select/query-input value=query enter='complete'
+          left=(action 'left') right=(action 'right') del=(action 'del')}}
+      </li>
+    {{/if}}
     <li>
       {{selection.label}}<i {{action 'deselect' selection}}> x</i>
       {{#if selection.options.length}}
@@ -9,9 +15,12 @@
       {{/if}}
     </li>
   {{/each}}
-  <li>
-    {{input value=query enter='complete'}}
-  </li>
+  {{#if (eq queryPosition content.selections.length)}}
+    <li>
+      {{deep-select/query-input value=query enter='complete'
+        left=(action 'left') right=(action 'right') del=(action 'del')}}
+    </li>
+  {{/if}}
 </ul>
 
 <ul class='options'>

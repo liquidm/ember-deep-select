@@ -37,6 +37,7 @@
     "ember-export-application-global": "^1.0.3",
     "ember-keyboard": "0.0.10",
     "ember-lodash": "0.0.6",
+    "ember-truth-helpers": "1.2.0",
     "ember-try": "0.0.6"
   },
   "keywords": [

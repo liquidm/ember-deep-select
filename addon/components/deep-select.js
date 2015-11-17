@@ -1,14 +1,13 @@
-import Ember from 'ember';
 import layout from '../templates/components/deep-select';
 import filterByQuery from 'ember-cli-filter-by-query';
-import { keyDown } from 'ember-keyboard';
 import without from 'lodash/array/without';
+import Ember from 'ember';
 const { Component, computed, on } = Ember;
 
 export default Component.extend({
   classNames: ['deep-select'],
-  layout: layout,
-  keyboard: Ember.inject.service(),
+  layout,
+  queryPosition: 0,
 
   suggestion: computed.alias('filteredOptions.firstObject'),
   filteredOptions: filterByQuery('options', 'label', 'query'),
@@ -18,15 +17,13 @@ export default Component.extend({
     return without(options, ...selections);
   }),
 
-  focus: on('didInsertElement', function() {
-    this.$('input').focus();
-  }),
-
   select(option) {
     if (option = option || this.get('suggestion')) {
       const selections = this.get('content.selections');
-      selections.pushObject(option);
+      const queryPosition = this.get('queryPosition');
+      selections.insertAt(queryPosition, option);
       this.set('query', '');
+      this.moveForward();
     }
   },
 
@@ -35,13 +32,32 @@ export default Component.extend({
     selections.removeObject(option);
   },
 
-  navigateBack: on(keyDown('ArrowLeft'), function() {
-    console.log('back');
-  }),
+  removeAtPos() {
+    const selections = this.get('content.selections');
+    const position = this.get('queryPosition');
+    selections.removeAt(position);
+    this.moveBack();
+  },
+
+  moveBack() {
+    if (this.get('queryPosition') > 0) {
+      this.decrementProperty('queryPosition');
+    }
+  },
+
+  moveForward() {
+    const length = this.get('content.selections.length');
+    if (this.get('queryPosition') < length) {
+      this.incrementProperty('queryPosition');
+    }
+  },
 
   actions: {
     select(option)   { this.select(option);   },
     complete()       { this.select();         },
-    deselect(option) { this.deselect(option); }
+    deselect(option) { this.deselect(option); },
+    left()           { this.moveBack();       },
+    right()          { this.moveForward();    },
+    del()            { this.removeAtPos();    }
   }
 });

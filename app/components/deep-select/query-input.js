@@ -1,0 +1,1 @@
+export { default } from 'ember-deep-select/components/deep-select/query-input';
