@@ -31,7 +31,25 @@ export default Ember.Controller.extend({
   options: [
     {
       value: 'IAB1',
-      label: 'Automobile'
+      label: 'Automobile',
+      options: [
+        {
+          label: 'BMW',
+          value: 'bmw'
+        },
+        {
+          label: 'Audi',
+          value: 'audi'
+        },
+        {
+          label: 'Tesla',
+          value: 'tesla'
+        },
+        {
+          label: 'Mercedes',
+          value: 'mercedes'
+        },
+      ]
     },
     {
       value: 'IAB2',
@@ -52,6 +70,20 @@ export default Ember.Controller.extend({
         {
           value: 'android',
           label: 'Android',
+          options: [
+            {
+              label: 'version 1',
+              value: 'v1',
+            },
+            {
+              label: 'version 2',
+              value: 'v2',
+            },
+            {
+              label: 'version 3',
+              value: 'v3',
+            },
+          ]
         },
       ]
     }
