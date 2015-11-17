@@ -3,7 +3,7 @@
 <ul class='selections'>
   {{#each content.selections as |selection|}}
     <li>
-      {{selection.label}}
+      {{selection.label}}<i {{action 'deselect' selection}}> x</i>
       {{#if selection.options.length}}
         {{deep-select content=selection}}
       {{/if}}
@@ -13,6 +13,6 @@
 
 <ul class='options'>
   {{#each content.options as |option|}}
-    <li>{{option.label}}</li>
+    <li {{action 'select' option}}>{{option.label}}</li>
   {{/each}}
 </ul>
