@@ -1,0 +1,15 @@
+.deep-select ul.selections {
+  background: lightblue;
+  border: 1px solid blue;
+  max-width: 400px;
+  padding: 1em;
+  margin: 0;
+}
+
+.deep-select ul.options {
+  background: lightgray;
+  border: 1px solid gray;
+  max-width: 400px;
+  padding: 1em;
+  margin: 0;
+}
