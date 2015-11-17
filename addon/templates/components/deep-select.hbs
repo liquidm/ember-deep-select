@@ -9,10 +9,13 @@
       {{/if}}
     </li>
   {{/each}}
+  <li>
+    {{input value=query enter='complete'}}
+  </li>
 </ul>
 
 <ul class='options'>
-  {{#each content.options as |option|}}
+  {{#each filteredOptions as |option|}}
     <li {{action 'select' option}}>{{option.label}}</li>
   {{/each}}
 </ul>

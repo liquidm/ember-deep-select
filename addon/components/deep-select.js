@@ -10,6 +10,8 @@ export default Component.extend({
   layout: layout,
   keyboard: Ember.inject.service(),
 
+  suggestion: computed.alias('filteredOptions.firstObject'),
+  filteredOptions: filterByQuery('options', 'label', 'query'),
   options: computed('content.options.[]', 'content.selections.[]', function() {
     const selections = this.get('content.selections');
     const options = this.get('content.options');
@@ -21,9 +23,11 @@ export default Component.extend({
   }),
 
   select(option) {
-    const selections = this.get('content.selections');
-    selections.pushObject(option);
-    this.set('query', '');
+    if (option = option || this.get('suggestion')) {
+      const selections = this.get('content.selections');
+      selections.pushObject(option);
+      this.set('query', '');
+    }
   },
 
   deselect(option) {
@@ -31,8 +35,13 @@ export default Component.extend({
     selections.removeObject(option);
   },
 
+  navigateBack: on(keyDown('ArrowLeft'), function() {
+    console.log('back');
+  }),
+
   actions: {
     select(option)   { this.select(option);   },
+    complete()       { this.select();         },
     deselect(option) { this.deselect(option); }
   }
 });
