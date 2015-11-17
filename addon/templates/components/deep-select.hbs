@@ -1,1 +1,18 @@
 {{log content}}
+
+<ul class='selections'>
+  {{#each content.selections as |selection|}}
+    <li>
+      {{selection.label}}
+      {{#if selection.options.length}}
+        {{deep-select content=selection}}
+      {{/if}}
+    </li>
+  {{/each}}
+</ul>
+
+<ul class='options'>
+  {{#each content.options as |option|}}
+    <li>{{option.label}}</li>
+  {{/each}}
+</ul>
