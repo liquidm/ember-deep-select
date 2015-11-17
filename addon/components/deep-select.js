@@ -28,8 +28,8 @@ export default Component.extend({
       const queryPosition = this.get('queryPosition');
       selections.insertAt(queryPosition, option);
       this.set('query', '');
-      this.moveForward();
     }
+    this.moveForward();
   },
 
   deselect(option) {
