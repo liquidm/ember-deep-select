@@ -19,7 +19,12 @@ export default Component.extend({
   options: computed('content.options.[]', 'content.selections.[]', function() {
     const selections = this.get('content.selections');
     const options = this.get('content.options');
-    return without(options, ...selections);
+    const multi = this.get('content.multi');
+    if (multi) {
+      return without(options, ...selections);
+    } else {
+      return selections.length ? [] : options;
+    }
   }),
 
   select(option) {
@@ -57,11 +62,10 @@ export default Component.extend({
       return;
     } else if (parentView.get('isDeepSelect')) {
       Ember.run.next(() => {
-        this.set('queryPosition', -1);
         const content = this.get('content');
         const parentSelections = content.get('parent.selections');
         const position = parentSelections.indexOf(content);
-        parentView.$('input').focus();
+        parentView.$('> ul > li > input').first().focus();
         parentView.set('queryPosition', position + offset);
       });
     } else {
@@ -73,12 +77,11 @@ export default Component.extend({
     const selections = this.get('content.selections');
     const position = this.get('queryPosition');
     const innerSelection = selections.objectAt(position - 1 + offset);
-    if (innerSelection.get('hasChildren')) {
+    if (innerSelection.get('view.isDeepSelect')) {
       Ember.run.next(() => {
-        this.set('queryPosition', -1);
         const childView = innerSelection.get('view');
         const innerSelectionsLength = innerSelection.get('selections.length');
-        childView.$('input').focus();
+        childView.$('> ul > li > input').first().focus();
         childView.set('queryPosition', offset ? 0 : innerSelectionsLength);
       });
     } else {
@@ -95,8 +98,8 @@ export default Component.extend({
   },
 
   moveForward() {
-    const length = this.get('content.selections.length');
-    if (this.get('queryPosition') < length) {
+    const selectionsLength = this.get('content.selections.length');
+    if (this.get('queryPosition') < selectionsLength) {
       this.moveDown(1);
     } else {
       this.moveUp(1);
