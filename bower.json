@@ -12,6 +12,7 @@
     "jquery": "2.1.4",
     "loader.js": "ember-cli/loader.js#3.2.1",
     "qunit": "~1.18.0",
-    "sifter": "~0.4.3"
+    "sifter": "~0.4.3",
+    "dom-ruler": "0.1.13"
   }
 }

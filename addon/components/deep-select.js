@@ -9,6 +9,8 @@ export default Component.extend({
   layout,
   isDeepSelect: true,
   queryPosition: 0,
+  zIndex: 5000,
+
   setView: on('didInsertElement', function() {
     const content = this.get('content');
     content.set('view', this);
@@ -27,12 +29,25 @@ export default Component.extend({
     }
   }),
 
+  nextLayer: computed('layer', function() {
+    return this.get('layer') + 1;
+  }),
+
+  zIndexOptions: computed('zIndex', 'nextLayer', function() {
+    return this.get('zIndex') + this.get('nextLayer');
+  }),
+
+  suggest(option) {
+    this.set('suggestion', option);
+  },
+
   select(option) {
     if (option = option || this.get('suggestion')) {
       const selections = this.get('content.selections');
       const queryPosition = this.get('queryPosition');
       selections.insertAt(queryPosition, option);
       this.set('query', '');
+      this.$('input').first().focus();
     }
     this.moveForward();
   },
@@ -65,7 +80,7 @@ export default Component.extend({
         const content = this.get('content');
         const parentSelections = content.get('parent.selections');
         const position = parentSelections.indexOf(content);
-        parentView.$('> ul > li > input').first().focus();
+        parentView.$('> .selections > li > input').first().focus();
         parentView.set('queryPosition', position + offset);
       });
     } else {
@@ -81,7 +96,7 @@ export default Component.extend({
       Ember.run.next(() => {
         const childView = innerSelection.get('view');
         const innerSelectionsLength = innerSelection.get('selections.length');
-        childView.$('> ul > li > input').first().focus();
+        childView.$('> .selections > li > input').first().focus();
         childView.set('queryPosition', offset ? 0 : innerSelectionsLength);
       });
     } else {
@@ -107,6 +122,7 @@ export default Component.extend({
   },
 
   actions: {
+    suggest(option)  { this.suggest(option);  },
     select(option)   { this.select(option);   },
     complete()       { this.select();         },
     deselect(option) { this.deselect(option); },

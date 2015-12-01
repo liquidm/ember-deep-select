@@ -6,6 +6,7 @@ const { TextField, on, inject } = Ember;
 export default TextField.extend({
   keyboard: inject.service(),
   layout,
+  autoresize: true,
 
   focus: on('didInsertElement', function() {
     this.$().focus();

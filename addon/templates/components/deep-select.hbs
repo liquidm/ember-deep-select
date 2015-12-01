@@ -1,28 +1,36 @@
-<ul class='selections'>
+<div class='selections layer-{{layer}}'>
   {{#each content.selections as |selection index|}}
     {{#if (eq index queryPosition)}}
-      <li>
+      <li class='deep-select-input'>
         {{deep-select/query-input value=query enter='complete'
           left=(action 'left') right=(action 'right') del=(action 'del')}}
+        {{#if options}}
+          <ul class='options'>
+            {{#each filteredOptions as |option|}}
+              <li {{action 'select' option}}>{{option.label}}</li>
+            {{/each}}
+          </ul>
+        {{/if}}
       </li>
     {{/if}}
     <li>
-      {{selection.label}}<i {{action 'deselect' selection}}> x</i>
+      <span class='label'><i {{action 'deselect' selection}}>x</i><label>{{selection.label}}</label></span>
       {{#if selection.options.length}}
-        {{deep-select content=selection}}
+        {{deep-select content=selection layer=nextLayer}}
       {{/if}}
     </li>
   {{/each}}
   {{#if (eq queryPosition content.selections.length)}}
-    <li>
+    <li class='deep-select-input'>
       {{deep-select/query-input value=query enter='complete'
         left=(action 'left') right=(action 'right') del=(action 'del')}}
+      {{#if options}}
+        <ul class='options' style='z-index: {{zIndexOptions}};'>
+          {{#each filteredOptions as |option|}}
+            <li {{action 'select' option}} {{action 'suggest' option on='mouseEnter'}} class={{if (eq option suggestion) 'suggested'}}>{{option.label}}</li>
+          {{/each}}
+        </ul>
+      {{/if}}
     </li>
   {{/if}}
-</ul>
-
-<ul class='options'>
-  {{#each filteredOptions as |option|}}
-    <li {{action 'select' option}}>{{option.label}}</li>
-  {{/each}}
-</ul>
+</div>

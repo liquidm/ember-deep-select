@@ -1,15 +1,122 @@
-.deep-select ul.selections {
-  background: lightblue;
-  border: 1px solid blue;
-  max-width: 400px;
-  padding: 1em;
+.deep-select > .selections.layer-1 { font-size: .8em !important }
+.deep-select > .selections.layer-2 { font-size: .8em !important }
+.deep-select > .selections.layer-3 { font-size: .8em !important }
+
+.deep-select > .selections.layer-2 .deep-select {
+  margin: 0 -2px;
+}
+
+.deep-select > .selections.layer-3 .deep-select {
+  margin: 0 -3px;
+}
+
+.deep-select > .selections.layer-4 li {
+  margin: -1px 0;
+  color: rgba(255,255,255,.8);
+}
+
+.deep-select {
+  font-family: sans-serif;
+  font-weight: 300;
+  color: #333;
+}
+
+.deep-select .selections {
+  display: inline-block;
+}
+
+.deep-select div.selections.layer-0 {
+  border: 1px solid #ccc;
+  border-radius: .4em;
+  background: white;
+  width: 300px;
+}
+
+.deep-select div.selections > li {
+  border: 1px solid #ccc;
+  border-radius: .4em;
+  padding: 0 .2em;
+  margin: .2em;
+  line-height: 2em;
+  vertical-align: bottom;
+  background: rgba(0,0,0,0.1);
+  border-color: rgba(0,0,0,0.2);
+}
+
+.deep-select div.selections label {
+  margin: .5em
+}
+
+.deep-select div.selections i:hover {
+  color: #0477BC
+}
+.deep-select div.selections i {
+  cursor: pointer;
+  display: inline-block;
+  height: 100%;
+  width: 2em;
+  text-align: center;
+  font-style: normal;
+  border-right: 1px solid #ccc;
+  border-color: rgba(0,0,0,0.2);
+}
+
+.deep-select div.selections > li.deep-select-input {
+  border: none;
   margin: 0;
+  padding: 0;
+  background: transparent;
+  vertical-align: initial
+}
+
+.deep-select div.selections > li {
+  display: inline-block;
+}
+
+.deep-select input + .options{
+  opacity: 0;
+}
+
+.deep-select input:focus  + .options{
+  opacity: 1;
+}
+
+.deep-select input{
+  outline: none;
+  height: 100%;
+  border: none;
+  background: transparent;
+  text-align: center;
+  opacity: 0;
+}
+
+.deep-select input:focus {
+  opacity: 1;
+}
+
+.deep-select {
+  display: inline-block;
 }
 
 .deep-select ul.options {
-  background: lightgray;
-  border: 1px solid gray;
+  position: absolute;
   max-width: 400px;
-  padding: 1em;
-  margin: 0;
+  min-width: 150px;
+  list-style: none;
+  border: 1px solid #CCCCCC;
+  border-radius: 0 .4em .4em .4em;
+  padding: .5em 0;
+  margin-bottom: 0;
+  font-size: initial;
+  background: white;
+}
+
+.deep-select ul.options li {
+  padding: 0 1em;
+}
+
+.deep-select ul.options li.suggested {
+  background: #0477BC;
+  color: white;
+  padding: 0 1em;
 }

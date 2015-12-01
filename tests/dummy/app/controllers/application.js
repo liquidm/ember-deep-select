@@ -73,10 +73,39 @@ export default Ember.Controller.extend({
         {
           value: 'android',
           label: 'Android',
+          multi: true,
           options: [
             {
               label: 'version 1',
               value: 'v1',
+              options: [
+                {
+                  label: 'release',
+                  value: 'r',
+                  multi: true,
+                  options: [
+                    {
+                      label: 'stable',
+                      value: 's'
+                    },
+                    {
+                      label: 'unstable',
+                      value: 'u',
+                      multi: true,
+                      options: [
+                        {
+                          label: 'pre',
+                          value: 'pr'
+                        },
+                        {
+                          label: 'post',
+                          value: 'po'
+                        },
+                      ]
+                    }
+                  ]
+                },
+              ],
             },
             {
               label: 'version 2',
