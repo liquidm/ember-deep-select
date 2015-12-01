@@ -121,13 +121,29 @@ export default Component.extend({
     }
   },
 
+  suggestNext(offset = 1) {
+    const options = this.get('filteredOptions');
+    const suggestion = this.get('suggestion');
+    const currentIndex = options.indexOf(suggestion);
+    const nextIndex = currentIndex - offset;
+    if ( 0 <= nextIndex && nextIndex < options.length) {
+      this.set('suggestion',options.objectAt(nextIndex));
+    }
+  },
+
+  suggestPrevious(offset = 1) {
+    this.suggestNext(-offset);
+  },
+
   actions: {
-    suggest(option)  { this.suggest(option);  },
-    select(option)   { this.select(option);   },
-    complete()       { this.select();         },
-    deselect(option) { this.deselect(option); },
-    left()           { this.moveBack();       },
-    right()          { this.moveForward();    },
-    del()            { this.removeAtPos();    }
+    suggest(option)  { this.suggest(option);   },
+    up()             { this.suggestNext();     },
+    down()           { this.suggestPrevious(); },
+    select(option)   { this.select(option);    },
+    complete()       { this.select();          },
+    deselect(option) { this.deselect(option);  },
+    left()           { this.moveBack();        },
+    right()          { this.moveForward();     },
+    del()            { this.removeAtPos();     }
   }
 });

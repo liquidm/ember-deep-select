@@ -33,4 +33,12 @@ export default TextField.extend({
       this.sendAction('right');
     }
   }),
+
+  arrowUp: on(keyDown('ArrowUp'), function() {
+    this.sendAction('up');
+  }),
+
+  arrowDown: on(keyDown('ArrowDown'), function() {
+    this.sendAction('down');
+  }),
 });

@@ -3,7 +3,7 @@
     {{#if (eq index queryPosition)}}
       <li class='deep-select-input'>
         {{deep-select/query-input value=query enter='complete'
-          left=(action 'left') right=(action 'right') del=(action 'del')}}
+          up=(action 'up') down=(action 'down') left=(action 'left') right=(action 'right') del=(action 'del')}}
         {{#if options}}
           <ul class='options'>
             {{#each filteredOptions as |option|}}
@@ -23,7 +23,7 @@
   {{#if (eq queryPosition content.selections.length)}}
     <li class='deep-select-input'>
       {{deep-select/query-input value=query enter='complete'
-        left=(action 'left') right=(action 'right') del=(action 'del')}}
+        up=(action 'up') down=(action 'down') left=(action 'left') right=(action 'right') del=(action 'del')}}
       {{#if options}}
         <ul class='options' style='z-index: {{zIndexOptions}};'>
           {{#each filteredOptions as |option|}}
