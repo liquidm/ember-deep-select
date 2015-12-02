@@ -2,7 +2,7 @@ import layout from '../templates/components/deep-select';
 import filterByQuery from 'ember-cli-filter-by-query';
 import without from 'lodash/array/without';
 import Ember from 'ember';
-const { Component, computed, on } = Ember;
+const { Component, computed, on, run } = Ember;
 
 export default Component.extend({
   classNames: ['deep-select'],
@@ -47,7 +47,7 @@ export default Component.extend({
       const queryPosition = this.get('queryPosition');
       selections.insertAt(queryPosition, option);
       this.set('query', '');
-      this.$('input').first().focus();
+      this.$().children('.selections').children('li').children('input').show().focus();
     }
     this.moveForward();
   },
@@ -76,15 +76,21 @@ export default Component.extend({
     if (parentView === this) {
       return;
     } else if (parentView.get('isDeepSelect')) {
-      Ember.run.next(() => {
+      run.next(() => {
         const content = this.get('content');
         const parentSelections = content.get('parent.selections');
         const position = parentSelections.indexOf(content);
-        parentView.$('> .selections > li > input').first().focus();
+        this.$('.deep-select-input').hide();
         parentView.set('queryPosition', position + offset);
+        run.next(() => {
+          parentView.$().children('.selections').children('.deep-select-input').show().children('input').focus();
+        });
       });
     } else {
       this.incrementProperty('queryPosition', 1 - offset);
+      run.next(() => {
+        this.$().children('.selections').children('.deep-select-input').show().children('input').focus();
+      });
     }
   },
 
@@ -93,14 +99,20 @@ export default Component.extend({
     const position = this.get('queryPosition');
     const innerSelection = selections.objectAt(position - 1 + offset);
     if (innerSelection.get('view.isDeepSelect')) {
-      Ember.run.next(() => {
+      run.next(() => {
         const childView = innerSelection.get('view');
         const innerSelectionsLength = innerSelection.get('selections.length');
-        childView.$('> .selections > li > input').first().focus();
+        this.$('.deep-select-input').hide();
         childView.set('queryPosition', offset ? 0 : innerSelectionsLength);
+        run.next(() => {
+          childView.$().children('.selections').children('.deep-select-input').show().children('input').focus();
+        });
       });
     } else {
       this.incrementProperty('queryPosition', 2 * offset - 1);
+      run.next(() => {
+        this.$().children('.selections').children('.deep-select-input').show().children('input').focus();
+      });
     }
   },
 
@@ -119,6 +131,24 @@ export default Component.extend({
     } else {
       this.moveUp(1);
     }
+  },
+
+  click(e) {
+    const target = $(e.target);
+    if (target.is('.deep-select-li'))  {
+      target.children('.deep-select')
+        .children('.selections')
+        .children('.deep-select-input').show()
+        .children('input').focus();
+    } else {
+      this.$()
+        .children('.selections')
+        .children('.deep-select-input').show()
+        .children('input').focus();
+    }
+
+    e.preventDefault;
+    return false;
   },
 
   suggestNext(offset = 1) {

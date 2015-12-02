@@ -87,11 +87,6 @@
   border: none;
   background: transparent;
   text-align: center;
-  opacity: 0;
-}
-
-.deep-select input:focus {
-  opacity: 1;
 }
 
 .deep-select {
@@ -113,10 +108,11 @@
 
 .deep-select ul.options li {
   padding: 0 1em;
+  color: black !important;
 }
 
 .deep-select ul.options li.suggested {
   background: #0477BC;
-  color: white;
+  color: white !important;
   padding: 0 1em;
 }

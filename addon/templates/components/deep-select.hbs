@@ -13,7 +13,7 @@
         {{/if}}
       </li>
     {{/if}}
-    <li>
+    <li class={{if selection.options.length 'deep-select-li'}}>
       <span class='label'><i {{action 'deselect' selection}}>x</i><label>{{selection.label}}</label></span>
       {{#if selection.options.length}}
         {{deep-select content=selection layer=nextLayer}}
