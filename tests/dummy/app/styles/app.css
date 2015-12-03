@@ -30,6 +30,7 @@
   border-radius: .4em;
   background: white;
   width: 300px;
+  min-height: 2em;
 }
 
 .deep-select div.selections > li {
@@ -43,8 +44,13 @@
   border-color: rgba(0,0,0,0.2);
 }
 
+
+.deep-select div.selections .label {
+  pointer-events: none;
+}
+
 .deep-select div.selections label {
-  margin: .5em
+  margin: .5em;
 }
 
 .deep-select div.selections i:hover {
@@ -59,10 +65,16 @@
   font-style: normal;
   border-right: 1px solid #ccc;
   border-color: rgba(0,0,0,0.2);
+  pointer-events: all;
+}
+
+.deep-select div.selections > li.deep-select-input.show {
+  display: initial;
 }
 
 .deep-select div.selections > li.deep-select-input {
   border: none;
+  display: none;
   margin: 0;
   padding: 0;
   background: transparent;
@@ -73,12 +85,12 @@
   display: inline-block;
 }
 
-.deep-select input + .options{
-  opacity: 0;
+.deep-select .deep-select-input.show .options {
+  display: initial;
 }
 
-.deep-select input:focus  + .options{
-  opacity: 1;
+.deep-select .deep-select-input .options {
+  opacity: none;
 }
 
 .deep-select input{

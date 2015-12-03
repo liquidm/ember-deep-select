@@ -47,7 +47,7 @@ export default Component.extend({
       const queryPosition = this.get('queryPosition');
       selections.insertAt(queryPosition, option);
       this.set('query', '');
-      this.$().children('.selections').children('li').children('input').show().focus();
+      this.$().children('.selections').children('li').children('input').addClass('show').focus();
     }
     this.moveForward();
   },
@@ -80,16 +80,16 @@ export default Component.extend({
         const content = this.get('content');
         const parentSelections = content.get('parent.selections');
         const position = parentSelections.indexOf(content);
-        this.$('.deep-select-input').hide();
+        this.$('.deep-select-input').removeClass('show');
         parentView.set('queryPosition', position + offset);
         run.next(() => {
-          parentView.$().children('.selections').children('.deep-select-input').show().children('input').focus();
+          parentView.$().children('.selections').children('.deep-select-input').addClass('show').children('input').focus();
         });
       });
     } else {
       this.incrementProperty('queryPosition', 1 - offset);
       run.next(() => {
-        this.$().children('.selections').children('.deep-select-input').show().children('input').focus();
+        this.$().children('.selections').children('.deep-select-input').addClass('show').children('input').focus();
       });
     }
   },
@@ -102,16 +102,16 @@ export default Component.extend({
       run.next(() => {
         const childView = innerSelection.get('view');
         const innerSelectionsLength = innerSelection.get('selections.length');
-        this.$('.deep-select-input').hide();
+        this.$('.deep-select-input').removeClass('show');
         childView.set('queryPosition', offset ? 0 : innerSelectionsLength);
         run.next(() => {
-          childView.$().children('.selections').children('.deep-select-input').show().children('input').focus();
+          childView.$().children('.selections').children('.deep-select-input').addClass('show').children('input').focus();
         });
       });
     } else {
       this.incrementProperty('queryPosition', 2 * offset - 1);
       run.next(() => {
-        this.$().children('.selections').children('.deep-select-input').show().children('input').focus();
+        this.$().children('.selections').children('.deep-select-input').addClass('show').children('input').focus();
       });
     }
   },
@@ -134,21 +134,25 @@ export default Component.extend({
   },
 
   click(e) {
-    const target = $(e.target);
-    if (target.is('.deep-select-li'))  {
+    const target = Ember.$(e.target);
+    if (target.is('.deep-select-li')) {
       target.children('.deep-select')
         .children('.selections')
-        .children('.deep-select-input').show()
+        .children('.deep-select-input').addClass('show')
         .children('input').focus();
     } else {
       this.$()
         .children('.selections')
-        .children('.deep-select-input').show()
+        .children('.deep-select-input').addClass('show')
         .children('input').focus();
     }
 
-    e.preventDefault;
+    e.preventDefault();
     return false;
+  },
+
+  focusOut() {
+    //this.$().children('.selections').children('.deep-select-input').removeClass('show');
   },
 
   suggestNext(offset = 1) {

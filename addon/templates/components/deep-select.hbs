@@ -5,9 +5,9 @@
         {{deep-select/query-input value=query enter='complete'
           up=(action 'up') down=(action 'down') left=(action 'left') right=(action 'right') del=(action 'del')}}
         {{#if options}}
-          <ul class='options'>
+          <ul class='options' style='z-index: {{zIndexOptions}};'>
             {{#each filteredOptions as |option|}}
-              <li {{action 'select' option}}>{{option.label}}</li>
+              <li {{action 'select' option bubble=false}} {{action 'suggest' option on='mouseEnter'}} class={{if (eq option suggestion) 'suggested'}}>{{option.label}}</li>
             {{/each}}
           </ul>
         {{/if}}
@@ -25,9 +25,9 @@
       {{deep-select/query-input value=query enter='complete'
         up=(action 'up') down=(action 'down') left=(action 'left') right=(action 'right') del=(action 'del')}}
       {{#if options}}
-        <ul class='options' style='z-index: {{zIndexOptions}};'>
+        <ul class='options' style='z-index: {{zIndexOptions}};' tabIndex="-1">
           {{#each filteredOptions as |option|}}
-            <li {{action 'select' option}} {{action 'suggest' option on='mouseEnter'}} class={{if (eq option suggestion) 'suggested'}}>{{option.label}}</li>
+            <li {{action 'select' option bubble=false}} tabIndex="-1" {{action 'suggest' option on='mouseEnter'}} class={{if (eq option suggestion) 'suggested'}}>{{option.label}}</li>
           {{/each}}
         </ul>
       {{/if}}
