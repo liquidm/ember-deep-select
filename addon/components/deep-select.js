@@ -98,22 +98,25 @@ export default Component.extend({
     const selections = this.get('content.selections');
     const position = this.get('queryPosition');
     const innerSelection = selections.objectAt(position - 1 + offset);
-    if (innerSelection.get('view.isDeepSelect')) {
-      run.next(() => {
-        const childView = innerSelection.get('view');
-        const innerSelectionsLength = innerSelection.get('selections.length');
-        this.$('.deep-select-input').removeClass('show');
-        childView.set('queryPosition', offset ? 0 : innerSelectionsLength);
+    run.next(() => {
+      if (innerSelection.get('view.isDeepSelect')) {
         run.next(() => {
-          childView.$().children('.selections').children('.deep-select-input').addClass('show').children('input').focus();
+          const childView = innerSelection.get('view');
+          const innerSelectionsLength = innerSelection.get('selections.length');
+          this.$('.deep-select-input').removeClass('show');
+          childView.set('queryPosition', offset ? 0 : innerSelectionsLength);
+          run.next(() => {
+            console.log('hl child');
+            childView.$().children('.selections').children('.deep-select-input').addClass('show').children('input').focus();
+          });
         });
-      });
-    } else {
-      this.incrementProperty('queryPosition', 2 * offset - 1);
-      run.next(() => {
-        this.$().children('.selections').children('.deep-select-input').addClass('show').children('input').focus();
-      });
-    }
+      } else {
+        this.incrementProperty('queryPosition', 2 * offset - 1);
+        run.next(() => {
+          this.$().children('.selections').children('.deep-select-input').addClass('show').children('input').focus();
+        });
+      }
+    });
   },
 
   moveBack() {
