@@ -9,7 +9,6 @@ export default Component.extend({
   layout,
   isDeepSelect: true,
   queryPosition: 0,
-  zIndex: 5000,
 
   setView: on('didInsertElement', function() {
     const content = this.get('content');
@@ -33,10 +32,6 @@ export default Component.extend({
     return this.get('layer') + 1;
   }),
 
-  zIndexOptions: computed('zIndex', 'nextLayer', function() {
-    return this.get('zIndex') + this.get('nextLayer');
-  }),
-
   suggest(option) {
     this.set('suggestion', option);
   },
@@ -49,6 +44,7 @@ export default Component.extend({
       this.set('query', '');
       this.$().children('.selections').children('li').children('input').addClass('show').focus();
     }
+
     this.moveForward();
   },
 
@@ -106,7 +102,6 @@ export default Component.extend({
           this.$('.deep-select-input').removeClass('show');
           childView.set('queryPosition', offset ? 0 : innerSelectionsLength);
           run.next(() => {
-            console.log('hl child');
             childView.$().children('.selections').children('.deep-select-input').addClass('show').children('input').focus();
           });
         });
