@@ -13,7 +13,9 @@ export default Component.extend({
   setView: on('didInsertElement', function() {
     const content = this.get('content');
     content.set('view', this);
+    Ember.$(document).on('click', this.externalClick.bind(this));
   }),
+
 
   suggestion: computed.alias('filteredOptions.firstObject'),
   filteredOptions: filterByQuery('options', 'label', 'query'),
@@ -131,7 +133,12 @@ export default Component.extend({
     }
   },
 
+  externalClick(e) {
+    this.$().children('.selections').children('.deep-select-input').removeClass('show');
+  },
+
   click(e) {
+    Ember.$('.deep-select-input').removeClass('show');
     const target = Ember.$(e.target);
     if (target.is('.deep-select-li')) {
       target.children('.deep-select')
@@ -147,10 +154,6 @@ export default Component.extend({
 
     e.preventDefault();
     return false;
-  },
-
-  focusOut() {
-    //this.$().children('.selections').children('.deep-select-input').removeClass('show');
   },
 
   suggestNext(offset = 1) {
@@ -176,6 +179,6 @@ export default Component.extend({
     deselect(option) { this.deselect(option);  },
     left()           { this.moveBack();        },
     right()          { this.moveForward();     },
-    del()            { this.removeAtPos();     }
+    del()            { this.removeAtPos();     },
   }
 });

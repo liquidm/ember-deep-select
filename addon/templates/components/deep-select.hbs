@@ -5,7 +5,7 @@
         {{deep-select/query-input value=query enter='complete'
           up=(action 'up') down=(action 'down') left=(action 'left') right=(action 'right') del=(action 'del')}}
         {{#if options}}
-          <ul class='options' {{action 'foo' on='mouseEnter'}} {{action 'bar' on='mouseLeave'}}>
+          <ul class='options'>
             {{#each filteredOptions as |option|}}
               <li {{action 'select' option bubble=false}} {{action 'suggest' option on='mouseEnter'}} class={{if (eq option suggestion) 'suggested'}}>{{option.label}}</li>
             {{/each}}
@@ -25,7 +25,7 @@
       {{deep-select/query-input value=query enter='complete'
         up=(action 'up') down=(action 'down') left=(action 'left') right=(action 'right') del=(action 'del')}}
       {{#if options}}
-        <ul class='options' {{action 'foo' on='mouseEnter'}} {{action 'bar' on='mouseLeave'}}>
+        <ul class='options'>
           {{#each filteredOptions as |option|}}
             <li {{action 'select' option bubble=false}} {{action 'suggest' option on='mouseEnter'}} class={{if (eq option suggestion) 'suggested'}}>{{option.label}}</li>
           {{/each}}
