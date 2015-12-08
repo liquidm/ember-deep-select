@@ -1,0 +1,1 @@
+export { default } from 'ember-deep-select/components/root-select';
