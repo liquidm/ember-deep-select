@@ -133,7 +133,7 @@ export default Component.extend({
     }
   },
 
-  externalClick(e) {
+  externalClick() {
     this.$().children('.selections').children('.deep-select-input').removeClass('show');
   },
 

@@ -1,8 +1,8 @@
 import Ember from 'ember';
 import layout from '../templates/components/root-select';
-const { computed, A, Component, Object } = Ember;
+const { computed, A, Component } = Ember;
 
-const Item = Object.extend({
+const Item = Ember.Object.extend({
   hasChildren: computed.bool('options.length'),
 });
 
