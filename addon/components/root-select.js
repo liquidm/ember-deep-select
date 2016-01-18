@@ -8,6 +8,7 @@ const Item = Ember.Object.extend({
 
 export default Component.extend({
   layout: layout,
+  classNames: ['root-select'],
 
   root: computed('options', 'selections', function() {
     const options = this.get('options');
