@@ -16,6 +16,9 @@ export default Component.extend({
     Ember.$(document).on('click', this.externalClick.bind(this));
   }),
 
+  unSetView: on('willDestroyElement', function() {
+    Ember.$(document).off('click', this.externalClick.bind(this));
+  }),
 
   suggestion: computed.alias('filteredOptions.firstObject'),
   filteredOptions: filterByQuery('options', 'label', 'query'),
@@ -134,7 +137,9 @@ export default Component.extend({
   },
 
   externalClick() {
-    this.$().children('.selections').children('.deep-select-input').removeClass('show');
+    if (this.$()) {
+      this.$().children('.selections').children('.deep-select-input').removeClass('show');
+    }
   },
 
   click(e) {
