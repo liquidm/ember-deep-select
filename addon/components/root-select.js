@@ -28,11 +28,12 @@ export default Component.extend({
       return item;
     });
 
-    const root = Item.create({ selections: new A() });
+    const root = Item.create({ selections: selections || new A() });
     root.options = rec(options, root);
     root.parent = root;
     root.multi = true; // there should be no root, but a user provided one
 
+    this.set('result', root);
     return root;
   })
 

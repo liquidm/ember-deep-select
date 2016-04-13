@@ -1,6 +1,5 @@
 import layout from '../templates/components/deep-select';
 import filterByQuery from 'ember-cli-filter-by-query';
-import without from 'lodash/array/without';
 import Ember from 'ember';
 const { Component, computed, on, run } = Ember;
 
@@ -27,7 +26,7 @@ export default Component.extend({
     const options = this.get('content.options');
     const multi = this.get('content.multi');
     if (multi) {
-      return without(options, ...selections);
+      return options.filter((o) => selections.mapBy('value').indexOf(o.value) === -1)
     } else {
       return selections.length ? [] : options;
     }
