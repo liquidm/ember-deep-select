@@ -14,8 +14,16 @@ export default Component.extend({
     const options = this.get('options');
     const selections = this.get('selections');
 
-    const rec = (list, parent) => !list ? [] : list.map(({ value, label, multi, options }) => {
+    const rec = (list, parent) => !list ? [] : list.map(({ value, label, multi, options, record }) => {
       const item = Item.create();
+
+      if (record) {
+        label = record.get('label');
+        value = record.get('value');
+        multi = record.get('multi');
+        options = record.get('options');
+      }
+
       item.setProperties({ parent, value, label, multi, options: rec(options, item), selections: parent ? new A() : selections });
       return item;
     });
